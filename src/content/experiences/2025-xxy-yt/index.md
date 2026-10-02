@@ -2,6 +2,8 @@
 title: "一点儿预推免保研经验分享₍˄·͈༝·͈˄*₎◞ ̑̑"
 author: "xxy"
 applicationYear: 2025
+cover: "./cover.jpg"
+coverAlt: "2025-xxy-yt 经验贴封面"
 draft: false
 ---
 

@@ -2,6 +2,8 @@
 title: "Lomig's SummerCamp Experiences"
 author: "Lomig"
 applicationYear: 2025
+cover: "./cover.png"
+coverAlt: "2025-lomig-sc 经验贴封面"
 draft: false
 ---
 

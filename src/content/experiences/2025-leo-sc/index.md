@@ -2,6 +2,8 @@
 title: "Leo's SummerCamp Experiences"
 author: "Leo"
 applicationYear: 2025
+cover: "./cover.jpg"
+coverAlt: "2025-leo-sc 经验贴封面"
 draft: false
 ---
 

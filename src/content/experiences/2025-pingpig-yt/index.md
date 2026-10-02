@@ -2,6 +2,8 @@
 title: "pingpig的预推免摆烂回顾"
 author: "pingpig"
 applicationYear: 2025
+cover: "./cover.jpg"
+coverAlt: "2025-pingpig-yt 经验贴封面"
 draft: false
 ---
 

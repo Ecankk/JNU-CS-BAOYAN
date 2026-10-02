@@ -2,6 +2,8 @@
 title: "Klein 的预推免经验帖"
 author: "klein"
 applicationYear: 2025
+cover: "./cover.jpg"
+coverAlt: "2025-klein-yt 经验贴封面"
 draft: false
 ---
 

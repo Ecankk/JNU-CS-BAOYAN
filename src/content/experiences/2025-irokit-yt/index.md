@@ -2,6 +2,8 @@
 title: "irokit 的保研经验分享"
 author: "irokit"
 applicationYear: 2025
+cover: "./cover.jpg"
+coverAlt: "2025-irokit-yt 经验贴封面"
 draft: false
 ---
 

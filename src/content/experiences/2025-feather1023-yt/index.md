@@ -2,6 +2,8 @@
 title: "“佛系”保研经验分享"
 author: "feather1023"
 applicationYear: 2025
+cover: "./cover.jpg"
+coverAlt: "2025-feather1023-yt 经验贴封面"
 draft: false
 ---
 

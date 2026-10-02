@@ -2,6 +2,8 @@
 title: "一点儿夏令营保研经验分享₍˄·͈༝·͈˄*₎◞ ̑̑"
 author: "xxy"
 applicationYear: 2025
+cover: "./cover.jpg"
+coverAlt: "2025-xxy-sc 经验贴封面"
 draft: false
 ---
 

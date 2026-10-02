@@ -2,6 +2,8 @@
 title: "末二低RK的保研之路"
 author: "ccandtt"
 applicationYear: 2025
+cover: "./cover.jpg"
+coverAlt: "2025-ccandtt-yt 经验贴封面"
 draft: false
 ---
 

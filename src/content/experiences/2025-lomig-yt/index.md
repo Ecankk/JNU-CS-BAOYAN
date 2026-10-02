@@ -2,6 +2,8 @@
 title: "Lomig's Pre-Recommendation Experiences"
 author: "Lomig"
 applicationYear: 2025
+cover: "./cover.png"
+coverAlt: "2025-lomig-yt 经验贴封面"
 draft: false
 ---
 

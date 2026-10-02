@@ -2,6 +2,8 @@
 title: "Klein 的保研经验帖"
 author: "klein"
 applicationYear: 2025
+cover: "./cover.jpg"
+coverAlt: "2025-klein-sc 经验贴封面"
 draft: false
 ---
 

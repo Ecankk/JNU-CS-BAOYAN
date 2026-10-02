@@ -2,6 +2,8 @@
 title: "pingpig的夏令营一手凉凉经"
 author: "pingpig"
 applicationYear: 2025
+cover: "./cover.jpg"
+coverAlt: "2025-pingpig-sc 经验贴封面"
 draft: false
 ---
 
