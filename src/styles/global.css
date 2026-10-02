@@ -65,12 +65,13 @@ button, a { -webkit-tap-highlight-color: transparent; }
   place-items: center;
   width: 2rem;
   height: 2rem;
-  border-radius: 9px;
-  background: var(--accent);
-  color: #fffaf4;
-  font-family: Georgia, serif;
-  font-size: 1.2rem;
+  border: 1px solid rgba(143, 78, 53, .2);
+  border-radius: 10px;
+  background: #f0dfd2;
+  color: var(--accent-deep);
 }
+.brand-mark svg { width: 1.65rem; height: 1.65rem; fill: currentColor; }
+.brand-mark .brand-sprout { fill: var(--sage); }
 nav { display: flex; align-items: center; gap: .25rem; flex-wrap: wrap; }
 .site-header nav a {
   padding: .45rem .75rem;
@@ -137,15 +138,23 @@ h3 { margin: 0; font-size: 1.22rem; }
 }
 .foreword-card {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(240px, .38fr);
-  gap: 2.2rem;
-  padding: clamp(1.3rem, 3vw, 2.4rem);
+  grid-template-columns: minmax(240px, .82fr) minmax(0, 1.18fr);
+  gap: clamp(1.2rem, 3vw, 2.4rem);
+  align-items: stretch;
+  min-height: 210px;
+  padding: clamp(1rem, 2vw, 1.35rem);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   background: var(--surface);
   box-shadow: var(--shadow);
 }
-.foreword-card img { border-radius: 14px; }
+.foreword-card-art { display: block; overflow: hidden; border-radius: 14px; background: var(--surface-soft); }
+.foreword-card-art img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform .25s ease; }
+.foreword-card-art:hover img { transform: scale(1.025); }
+.foreword-card-body { display: flex; flex-direction: column; justify-content: center; padding: .6rem clamp(.2rem, 1vw, .8rem) .6rem 0; }
+.foreword-card-body h3 { margin-bottom: .65rem; font-size: clamp(1.35rem, 2.5vw, 2rem); }
+.foreword-card-body p:not(.eyebrow) { margin: 0 0 .8rem; color: var(--muted); }
+.heading-icon { display: inline-grid; place-items: center; width: 1.8rem; height: 1.8rem; margin-right: .25rem; border-radius: 50%; background: #f0dfd2; color: var(--accent-deep); font-size: 1rem; vertical-align: .08em; }
 .prose { max-width: 780px; }
 .prose > :first-child { margin-top: 0; }
 .prose h2 { margin-top: 2.4rem; font-size: 1.65rem; }
@@ -197,6 +206,7 @@ h3 { margin: 0; font-size: 1.22rem; }
   box-shadow: 0 8px 24px rgba(93, 67, 49, .04);
 }
 .experience-card:hover { box-shadow: var(--shadow); transform: translateY(-3px); }
+.pagination-item { min-width: 0; }
 .card-cover { display: block; aspect-ratio: 16/9; overflow: hidden; background: var(--surface-soft); }
 .card-cover img { width: 100%; height: 100%; object-fit: cover; transition: transform .25s ease; }
 .experience-card:hover .card-cover img { transform: scale(1.025); }
@@ -220,6 +230,11 @@ h3 { margin: 0; font-size: 1.22rem; }
   text-decoration: none;
 }
 .year-nav a.active, .year-nav a:hover { border-color: var(--accent); color: var(--accent-deep); background: #f1e3d8; }
+.pagination { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-top: 2rem; padding-top: 1.2rem; border-top: 1px solid var(--border); }
+.pagination-label { color: var(--muted); font-size: .9rem; }
+.pagination-links { display: flex; flex-wrap: wrap; gap: .45rem; }
+.pagination-links a, .pagination-links button { display: inline-grid; place-items: center; min-width: 2.35rem; height: 2.35rem; padding: 0 .6rem; border: 1px solid var(--border); border-radius: 999px; background: var(--surface); color: var(--muted); font: inherit; font-size: .9rem; font-weight: 750; text-decoration: none; cursor: pointer; }
+.pagination-links a:hover, .pagination-links button:hover, .pagination-links a.active, .pagination-links button.active { border-color: var(--accent); background: #f1e3d8; color: var(--accent-deep); }
 .page-title { max-width: 760px; margin-bottom: 2.5rem; }
 .page-title p { color: var(--muted); font-size: 1.08rem; }
 .resource-grid, .link-grid {
@@ -267,6 +282,9 @@ h3 { margin: 0; font-size: 1.22rem; }
   .site-header nav a { padding: .35rem .45rem; font-size: .78rem; }
   .page-shell, .article-shell { width: min(100% - 1.2rem, 1180px); padding-top: 2.2rem; }
   .foreword-card { grid-template-columns: 1fr; }
+  .foreword-card-art { max-height: 190px; }
+  .foreword-card-body { padding: .2rem .2rem .5rem; }
+  .pagination { align-items: flex-start; flex-direction: column; }
   .experience-grid, .resource-grid, .link-grid { grid-template-columns: 1fr; }
   .article-end-nav { flex-direction: column; }
 }

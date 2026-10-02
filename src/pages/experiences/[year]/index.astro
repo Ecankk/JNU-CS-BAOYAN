@@ -1,9 +1,11 @@
 ---
 import { getCollection } from 'astro:content';
 import ExperienceCard from '../../../components/ExperienceCard.astro';
+import Pagination from '../../../components/Pagination.astro';
 import YearNav from '../../../components/YearNav.astro';
 import SiteLayout from '../../../layouts/SiteLayout.astro';
 import { groupByYear, type ExperienceEntry } from '../../../lib/experiences';
+import { EXPERIENCE_PAGE_SIZE, pageSlice, totalPages } from '../../../lib/pagination';
 
 export async function getStaticPaths() {
   const experiences = await getCollection('experiences', ({ data }) => !data.draft);
@@ -11,11 +13,11 @@ export async function getStaticPaths() {
   const years = [...groups.keys()];
   return years.map((year) => ({
     params: { year: String(year) },
-    props: { entries: groups.get(year) ?? [], years },
+    props: { entries: pageSlice(groups.get(year) ?? [], 1, EXPERIENCE_PAGE_SIZE), pageCount: totalPages(groups.get(year)?.length ?? 0), years },
   }));
 }
 
-const { entries, years: allYears } = Astro.props as { entries: ExperienceEntry[]; years: number[] };
+const { entries, pageCount, years: allYears } = Astro.props as { entries: ExperienceEntry[]; pageCount: number; years: number[] };
 const year = Number(Astro.params.year);
 ---
 <SiteLayout title={`${year} 年经验贴`}>
@@ -32,5 +34,6 @@ const year = Number(Astro.params.year);
   ) : (
     <p class="empty-state">这一年暂时没有公开经验贴。</p>
   )}
+  <Pagination currentPage={1} totalPages={pageCount} pathPrefix={`/experiences/${year}/`} />
 </SiteLayout>
 

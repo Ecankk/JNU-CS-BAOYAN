@@ -16,7 +16,13 @@ const hrefFor = (path: string) => `${base}${path}`;
 <header class="site-header">
   <div class="header-inner">
     <a class="brand" href={hrefFor('/')}>
-      <span class="brand-mark" aria-hidden="true">J</span>
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 32 32" focusable="false">
+          <path d="M7 8.5c4.1-.9 7.2-.3 9 1.6v14.2c-1.8-1.9-4.9-2.5-9-1.6V8.5Z" />
+          <path d="M25 8.5c-4.1-.9-7.2-.3-9 1.6v14.2c1.8-1.9 4.9-2.5 9-1.6V8.5Z" />
+          <path class="brand-sprout" d="M21.8 6.2c-1.8.1-3.2.8-4.2 2.2 1.9.2 3.4-.5 4.2-2.2Z" />
+        </svg>
+      </span>
       <span>{SITE_TITLE}</span>
     </a>
     <nav aria-label="主导航">

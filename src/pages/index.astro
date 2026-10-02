@@ -1,6 +1,6 @@
 ---
 import { Image } from 'astro:assets';
-import { getCollection, getEntry, render } from 'astro:content';
+import { getCollection, getEntry } from 'astro:content';
 import ExperienceCard from '../components/ExperienceCard.astro';
 import SiteLayout from '../layouts/SiteLayout.astro';
 import { groupByYear, sortExperiences } from '../lib/experiences';
@@ -9,10 +9,11 @@ import forewordArt from '../assets/foreword.svg';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const experiences = await getCollection('experiences', ({ data }) => !data.draft);
 const sorted = sortExperiences(experiences);
-const latest = sorted.slice(0, 6);
+const pageSize = 6;
+const pageCount = Math.max(1, Math.ceil(sorted.length / pageSize));
 const years = [...groupByYear(experiences).keys()];
 const foreword = await getEntry('pages', 'foreword');
-const Foreword = foreword ? (await render(foreword)).Content : null;
+const forewordSummary = foreword?.data.description ?? '项目说明、经验来源与投稿方式。';
 ---
 <SiteLayout>
   <section class="hero">
@@ -33,19 +34,89 @@ const Foreword = foreword ? (await render(foreword)).Content : null;
     </div>
   </section>
 
-  {Foreword && (
+  {foreword && (
     <section class="foreword" aria-labelledby="foreword-title">
       <div class="section-heading">
-        <h2 id="foreword-title">最前面的话</h2>
+        <h2 id="foreword-title"><span class="heading-icon" aria-hidden="true">✦</span> 最前面的话</h2>
         <a href={`${base}/about/`}>了解项目 →</a>
       </div>
-      <div class="foreword-card">
-        <div class="prose"><Foreword /></div>
-        <Image src={forewordArt} alt="项目介绍配图" width={1200} height={650} />
-      </div>
+      <article class="foreword-card">
+        <a class="foreword-card-art" href={`${base}/about/`} aria-label="阅读最前面的话">
+          <Image src={forewordArt} alt="项目介绍配图" width={1200} height={650} />
+        </a>
+        <div class="foreword-card-body">
+          <p class="eyebrow">PROJECT NOTE</p>
+          <h3>把经验留下，让准备少一点孤单。</h3>
+          <p>{forewordSummary}</p>
+          <a class="read-link" href={`${base}/about/`}>展开阅读 <span aria-hidden="true">→</span></a>
+        </div>
+      </article>
     </section>
   )}
 
+  <section class="section-block" aria-labelledby="latest-title">
+    <div class="section-heading">
+      <h2 id="latest-title"><span class="heading-icon" aria-hidden="true">⌁</span> 最近更新</h2>
+      <a href={`${base}/experiences/`}>全部文章 →</a>
+    </div>
+    {sorted.length ? (
+      <>
+        <div class="experience-grid home-experience-grid" data-home-grid>
+          {sorted.map((entry, index) => (
+            <div class="pagination-item" data-home-item hidden={index >= pageSize}>
+              <ExperienceCard entry={entry} />
+            </div>
+          ))}
+        </div>
+        {pageCount > 1 && (
+          <nav class="pagination home-pagination" data-home-pagination aria-label="最近更新分页">
+            <span class="pagination-label">共 {sorted.length} 篇</span>
+            <div class="pagination-links">
+              {Array.from({ length: pageCount }, (_, index) => index + 1).map((page) => (
+                <button type="button" class:list={{ active: page === 1 }} data-home-page={page} aria-current={page === 1 ? 'page' : undefined}>{page}</button>
+              ))}
+            </div>
+          </nav>
+        )}
+      </>
+    ) : (
+      <p class="empty-state">经验贴正在整理中，欢迎提交第一篇分享。</p>
+    )}
+  </section>
+
+  <script>
+    const pagination = document.querySelector<HTMLElement>('[data-home-pagination]');
+    const grid = document.querySelector<HTMLElement>('[data-home-grid]');
+    if (pagination && grid) {
+      const items = Array.from(grid.querySelectorAll<HTMLElement>('[data-home-item]'));
+      const buttons = Array.from(pagination.querySelectorAll<HTMLButtonElement>('[data-home-page]'));
+      const pageSize = 6;
+      const queryPage = Number(new URLSearchParams(window.location.search).get('page'));
+      const initialPage = Number.isFinite(queryPage) && queryPage > 0 ? queryPage : 1;
+      const setPage = (page: number, updateUrl = true) => {
+        const safePage = Math.min(Math.max(1, page), buttons.length);
+        items.forEach((item, index) => {
+          item.hidden = Math.floor(index / pageSize) + 1 !== safePage;
+        });
+        buttons.forEach((button) => {
+          const active = Number(button.dataset.homePage) === safePage;
+          button.classList.toggle('active', active);
+          if (active) button.setAttribute('aria-current', 'page');
+          else button.removeAttribute('aria-current');
+        });
+        if (updateUrl) {
+          const url = new URL(window.location.href);
+          if (safePage === 1) url.searchParams.delete('page');
+          else url.searchParams.set('page', String(safePage));
+          window.history.replaceState({}, '', url);
+        }
+      };
+      buttons.forEach((button) => button.addEventListener('click', () => setPage(Number(button.dataset.homePage))));
+      setPage(initialPage, false);
+    }
+  </script>
+
+  <!-- The home page keeps the three main destinations in the header and the foreword card. -->
   <section class="section-block" aria-labelledby="years-title">
     <div class="section-heading">
       <h2 id="years-title">按申请年份浏览</h2>
@@ -61,24 +132,5 @@ const Foreword = foreword ? (await render(foreword)).Content : null;
     </div>
   </section>
 
-  <section class="section-block" aria-labelledby="latest-title">
-    <div class="section-heading">
-      <h2 id="latest-title">最近更新</h2>
-      <a href={`${base}/experiences/`}>全部经验贴 →</a>
-    </div>
-    {latest.length ? (
-      <div class="experience-grid">
-        {latest.map((entry) => <ExperienceCard entry={entry} />)}
-      </div>
-    ) : (
-      <p class="empty-state">经验贴正在整理中，欢迎提交第一篇分享。</p>
-    )}
-  </section>
-
-  <section class="section-block link-grid" aria-label="项目入口">
-    <a class="resource-card" href={`${base}/guide/`}><h3>保研流程</h3><p>从前期准备到系统报名，按时间线查看准备重点。</p></a>
-    <a class="resource-card" href={`${base}/resources/`}><h3>资料与工具</h3><p>整理简历、专业课、机试、英语和数学等准备资料。</p></a>
-    <a class="resource-card" href={`${base}/submit/`}><h3>投稿</h3><p>下载 Markdown 或 Word 模板，把你的经历分享给后来者。</p></a>
-  </section>
 </SiteLayout>
 

@@ -38,7 +38,7 @@ draft: false
 
 正文不要求投稿者填写 YAML；维护者在发布前补充元数据。文章不会按学校、夏令营或预推免拆分栏目，这些信息保留在正文中。
 
-首页说明、流程、资料和关于页面位于 `src/content/pages/`。投稿模板位于：
+首页说明、流程、资料和关于页面位于 `src/content/pages/`。首页“最前面的话”以横向折叠卡片展示，完整内容在关于页查看；经验列表和年份列表均提供页码导航。投稿模板位于：
 
 - `public/templates/submission-template.md`
 - `public/templates/submission-template.docx`

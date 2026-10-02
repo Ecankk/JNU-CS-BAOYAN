@@ -1,0 +1,43 @@
+---
+import { getCollection } from 'astro:content';
+import ExperienceCard from '../../../../components/ExperienceCard.astro';
+import Pagination from '../../../../components/Pagination.astro';
+import YearNav from '../../../../components/YearNav.astro';
+import SiteLayout from '../../../../layouts/SiteLayout.astro';
+import { groupByYear, type ExperienceEntry } from '../../../../lib/experiences';
+import { EXPERIENCE_PAGE_SIZE, pageSlice, totalPages } from '../../../../lib/pagination';
+
+export async function getStaticPaths() {
+  const experiences = await getCollection('experiences', ({ data }) => !data.draft);
+  const groups = groupByYear(experiences);
+  const years = [...groups.keys()];
+  return years.flatMap((year) => {
+    const entries = groups.get(year) ?? [];
+    const pageCount = totalPages(entries.length);
+    return Array.from({ length: pageCount - 1 }, (_, index) => index + 2).map((page) => ({
+      params: { year: String(year), page: String(page) },
+      props: { entries: pageSlice(entries, page, EXPERIENCE_PAGE_SIZE), page, pageCount, year, years },
+    }));
+  });
+}
+
+const { entries, page, pageCount, year, years } = Astro.props as {
+  entries: ExperienceEntry[];
+  page: number;
+  pageCount: number;
+  year: number;
+  years: number[];
+};
+---
+<SiteLayout title={`${year} 年经验贴 · 第 ${page} 页`}>
+  <header class="page-title">
+    <p class="eyebrow">APPLICATION YEAR</p>
+    <h1>{year} 年经验贴</h1>
+    <p>这一年申请季留下的经验分享。</p>
+  </header>
+  <YearNav years={years} currentYear={year} />
+  <div class="experience-grid">
+    {entries.map((entry) => <ExperienceCard entry={entry} />)}
+  </div>
+  <Pagination currentPage={page} totalPages={pageCount} pathPrefix={`/experiences/${year}/`} />
+</SiteLayout>
