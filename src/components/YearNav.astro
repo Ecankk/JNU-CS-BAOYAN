@@ -1,0 +1,15 @@
+---
+interface Props {
+  years: number[];
+  currentYear?: number;
+}
+const { years, currentYear } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+<nav class="year-nav" aria-label="按申请年份浏览">
+  <a class:list={{ active: !currentYear }} href={`${base}/experiences/`}>全部</a>
+  {years.map((year) => (
+    <a class:list={{ active: currentYear === year }} href={`${base}/experiences/${year}/`}>{year}</a>
+  ))}
+</nav>
+

@@ -1,0 +1,30 @@
+---
+import { SITE_TITLE } from '../consts';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const links = [
+  ['经验贴', '/experiences/'],
+  ['保研流程', '/guide/'],
+  ['资料与工具', '/resources/'],
+  ['投稿', '/submit/'],
+  ['关于', '/about/'],
+] as const;
+const currentPath = Astro.url.pathname.replace(import.meta.env.BASE_URL, '/');
+const hrefFor = (path: string) => `${base}${path}`;
+---
+
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href={hrefFor('/')}>
+      <span class="brand-mark" aria-hidden="true">J</span>
+      <span>{SITE_TITLE}</span>
+    </a>
+    <nav aria-label="主导航">
+      <a class:list={{ active: currentPath === '/' }} href={hrefFor('/')}>首页</a>
+      {links.map(([label, path]) => (
+        <a class:list={{ active: currentPath.startsWith(path) }} href={hrefFor(path)}>{label}</a>
+      ))}
+    </nav>
+  </div>
+</header>
+

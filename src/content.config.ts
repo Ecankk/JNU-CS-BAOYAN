@@ -1,0 +1,34 @@
+import { defineCollection } from 'astro:content';
+import { glob } from 'astro/loaders';
+import { z } from 'astro/zod';
+
+const experiences = defineCollection({
+  loader: glob({ base: './src/content/experiences', pattern: '**/index.md' }),
+  schema: ({ image }) =>
+    z.object({
+      title: z.string(),
+      author: z.string().default('匿名'),
+      applicationYear: z.number().int().min(2000).max(2100),
+      summary: z.string().optional(),
+      cover: image().optional(),
+      coverAlt: z.string().optional(),
+      publishedAt: z.coerce.date().optional(),
+      updatedAt: z.coerce.date().optional(),
+      finalDestination: z.string().optional(),
+      sourceUrl: z.url().optional(),
+      draft: z.boolean().default(false),
+    }),
+});
+
+const pages = defineCollection({
+  loader: glob({ base: './src/content/pages', pattern: '**/*.md' }),
+  schema: ({ image }) =>
+    z.object({
+      title: z.string(),
+      description: z.string().optional(),
+      image: image().optional(),
+    }),
+});
+
+export const collections = { experiences, pages };
+

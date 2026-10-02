@@ -1,0 +1,12 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+---
+<SiteLayout title="页面不存在">
+  <div class="page-title">
+    <p class="eyebrow">404</p>
+    <h1>这个页面没有找到</h1>
+    <p>链接可能已经改变，也可以从首页重新开始浏览。</p>
+    <a class="button" href={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/`}>返回首页</a>
+  </div>
+</SiteLayout>
+

@@ -1,0 +1,40 @@
+---
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import { SUBMISSION_EMAIL } from '../../consts';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+<SiteLayout title="投稿" description="下载经验贴投稿模板并联系维护者。">
+  <header class="page-title">
+    <p class="eyebrow">SUBMIT</p>
+    <h1>分享一篇经验</h1>
+    <p>欢迎用 Markdown 或 Word 写下你的保研经历。投稿由维护者人工审核、整理和发布。</p>
+  </header>
+  <section class="resource-grid">
+    <div class="resource-card">
+      <h3>Markdown 模板</h3>
+      <p>适合熟悉 Markdown 的投稿者，下载后直接填写。</p>
+      <p><a class="button" href={`${base}/templates/submission-template.md`} download>下载 .md 模板</a></p>
+    </div>
+    <div class="resource-card">
+      <h3>Word 模板</h3>
+      <p>使用与 Markdown 对应的标题层级和章节结构。</p>
+      <p><a class="button" href={`${base}/templates/submission-template.docx`} download>下载 .docx 模板</a></p>
+    </div>
+    <div class="resource-card">
+      <h3>投稿邮箱</h3>
+      <p>请将正文文件、可公开图片和附件发送到：</p>
+      <p><a href={`mailto:${SUBMISSION_EMAIL}`}><strong>{SUBMISSION_EMAIL}</strong></a></p>
+    </div>
+  </section>
+  <section class="prose" style="margin-top: 3rem;">
+    <h2>投稿前请确认</h2>
+    <ol>
+      <li>可以使用真实姓名、昵称或匿名，不要求提交学号、精确排名或私人联系方式。</li>
+      <li>封面图片可选；没有图片时由维护者选择统一封面。</li>
+      <li>图片和附件请说明是否允许公开，未脱敏材料不要发送到公开仓库。</li>
+      <li>维护者会补充 YAML 元数据、检查链接和图片，再决定是否发布。</li>
+    </ol>
+  </section>
+</SiteLayout>
+

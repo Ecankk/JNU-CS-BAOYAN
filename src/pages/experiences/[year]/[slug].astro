@@ -1,0 +1,18 @@
+---
+import { getCollection, render } from 'astro:content';
+import ArticleLayout from '../../../layouts/ArticleLayout.astro';
+import { experienceSlug, sortExperiences, type ExperienceEntry } from '../../../lib/experiences';
+
+export async function getStaticPaths() {
+  const experiences = await getCollection('experiences', ({ data }) => !data.draft);
+  return sortExperiences(experiences).map((entry) => ({
+    params: { year: String(entry.data.applicationYear), slug: experienceSlug(entry) },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props as { entry: ExperienceEntry };
+const { Content } = await render(entry);
+---
+<ArticleLayout entry={entry}><Content /></ArticleLayout>
+

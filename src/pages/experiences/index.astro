@@ -1,0 +1,28 @@
+---
+import { getCollection } from 'astro:content';
+import ExperienceCard from '../../components/ExperienceCard.astro';
+import YearNav from '../../components/YearNav.astro';
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import { groupByYear, sortExperiences } from '../../lib/experiences';
+
+const experiences = await getCollection('experiences', ({ data }) => !data.draft);
+const sorted = sortExperiences(experiences);
+const groups = groupByYear(experiences);
+const years = [...groups.keys()];
+---
+<SiteLayout title="经验贴">
+  <header class="page-title">
+    <p class="eyebrow">EXPERIENCES</p>
+    <h1>经验贴</h1>
+    <p>按申请年份浏览真实经历。文章中的院校和阶段信息保持在作者自己的叙述里。</p>
+  </header>
+  <YearNav years={years} />
+  {sorted.length ? (
+    <div class="experience-grid">
+      {sorted.map((entry) => <ExperienceCard entry={entry} />)}
+    </div>
+  ) : (
+    <p class="empty-state">经验贴正在整理中。</p>
+  )}
+</SiteLayout>
+

@@ -1,0 +1,84 @@
+---
+import { Image } from 'astro:assets';
+import { getCollection, getEntry, render } from 'astro:content';
+import ExperienceCard from '../components/ExperienceCard.astro';
+import SiteLayout from '../layouts/SiteLayout.astro';
+import { groupByYear, sortExperiences } from '../lib/experiences';
+import forewordArt from '../assets/foreword.svg';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const experiences = await getCollection('experiences', ({ data }) => !data.draft);
+const sorted = sortExperiences(experiences);
+const latest = sorted.slice(0, 6);
+const years = [...groupByYear(experiences).keys()];
+const foreword = await getEntry('pages', 'foreword');
+const Foreword = foreword ? (await render(foreword)).Content : null;
+---
+<SiteLayout>
+  <section class="hero">
+    <div class="hero-copy">
+      <p class="eyebrow">JNU · CS · BAOYAN</p>
+      <h1>把经验留下，<br />让准备少一点孤单。</h1>
+      <p class="hero-lead">
+        JNU CS BAOYAN 收集江南大学计算机相关专业的保研经验、准备资料和流程记录，
+        按申请年份整理，方便后来者从真实经历中找到自己的参考。
+      </p>
+      <div class="hero-actions">
+        <a class="button" href={`${base}/experiences/`}>浏览经验贴</a>
+        <a class="button-secondary" href={`${base}/submit/`}>分享一篇经验</a>
+      </div>
+    </div>
+    <div class="hero-art">
+      <Image src={forewordArt} alt="JNU CS BAOYAN 项目介绍插图" width={1200} height={650} />
+    </div>
+  </section>
+
+  {Foreword && (
+    <section class="foreword" aria-labelledby="foreword-title">
+      <div class="section-heading">
+        <h2 id="foreword-title">最前面的话</h2>
+        <a href={`${base}/about/`}>了解项目 →</a>
+      </div>
+      <div class="foreword-card">
+        <div class="prose"><Foreword /></div>
+        <Image src={forewordArt} alt="项目介绍配图" width={1200} height={650} />
+      </div>
+    </section>
+  )}
+
+  <section class="section-block" aria-labelledby="years-title">
+    <div class="section-heading">
+      <h2 id="years-title">按申请年份浏览</h2>
+      <a href={`${base}/experiences/`}>查看全部 →</a>
+    </div>
+    <div class="year-list">
+      {years.map((year) => (
+        <a class="year-link" href={`${base}/experiences/${year}/`}>
+          <strong>{year}</strong>
+          <span>{groupByYear(experiences).get(year)?.length ?? 0} 篇经验贴</span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="section-block" aria-labelledby="latest-title">
+    <div class="section-heading">
+      <h2 id="latest-title">最近更新</h2>
+      <a href={`${base}/experiences/`}>全部经验贴 →</a>
+    </div>
+    {latest.length ? (
+      <div class="experience-grid">
+        {latest.map((entry) => <ExperienceCard entry={entry} />)}
+      </div>
+    ) : (
+      <p class="empty-state">经验贴正在整理中，欢迎提交第一篇分享。</p>
+    )}
+  </section>
+
+  <section class="section-block link-grid" aria-label="项目入口">
+    <a class="resource-card" href={`${base}/guide/`}><h3>保研流程</h3><p>从前期准备到系统报名，按时间线查看准备重点。</p></a>
+    <a class="resource-card" href={`${base}/resources/`}><h3>资料与工具</h3><p>整理简历、专业课、机试、英语和数学等准备资料。</p></a>
+    <a class="resource-card" href={`${base}/submit/`}><h3>投稿</h3><p>下载 Markdown 或 Word 模板，把你的经历分享给后来者。</p></a>
+  </section>
+</SiteLayout>
+

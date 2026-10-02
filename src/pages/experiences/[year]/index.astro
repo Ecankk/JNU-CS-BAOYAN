@@ -1,0 +1,36 @@
+---
+import { getCollection } from 'astro:content';
+import ExperienceCard from '../../../components/ExperienceCard.astro';
+import YearNav from '../../../components/YearNav.astro';
+import SiteLayout from '../../../layouts/SiteLayout.astro';
+import { groupByYear, type ExperienceEntry } from '../../../lib/experiences';
+
+export async function getStaticPaths() {
+  const experiences = await getCollection('experiences', ({ data }) => !data.draft);
+  const groups = groupByYear(experiences);
+  const years = [...groups.keys()];
+  return years.map((year) => ({
+    params: { year: String(year) },
+    props: { entries: groups.get(year) ?? [], years },
+  }));
+}
+
+const { entries, years: allYears } = Astro.props as { entries: ExperienceEntry[]; years: number[] };
+const year = Number(Astro.params.year);
+---
+<SiteLayout title={`${year} 年经验贴`}>
+  <header class="page-title">
+    <p class="eyebrow">APPLICATION YEAR</p>
+    <h1>{year} 年经验贴</h1>
+    <p>这一年申请季留下的经验分享。</p>
+  </header>
+  <YearNav years={allYears} currentYear={year} />
+  {entries.length ? (
+    <div class="experience-grid">
+      {entries.map((entry) => <ExperienceCard entry={entry} />)}
+    </div>
+  ) : (
+    <p class="empty-state">这一年暂时没有公开经验贴。</p>
+  )}
+</SiteLayout>
+

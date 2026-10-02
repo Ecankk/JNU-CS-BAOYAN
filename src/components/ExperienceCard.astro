@@ -1,0 +1,25 @@
+---
+import { Image } from 'astro:assets';
+import type { ExperienceEntry } from '../lib/experiences';
+import { experiencePath } from '../lib/experiences';
+import defaultCover from '../assets/default-cover.svg';
+
+interface Props {
+  entry: ExperienceEntry;
+}
+const { entry } = Astro.props;
+const cover = entry.data.cover ?? defaultCover;
+const coverAlt = entry.data.coverAlt ?? `${entry.data.title}封面`;
+---
+<article class="experience-card">
+  <a class="card-cover" href={experiencePath(entry)}>
+    <Image src={cover} alt={coverAlt} width={720} height={405} />
+  </a>
+  <div class="card-body">
+    <p class="eyebrow">{entry.data.applicationYear} · {entry.data.author}</p>
+    <h3><a href={experiencePath(entry)}>{entry.data.title}</a></h3>
+    {entry.data.summary && <p class="card-summary">{entry.data.summary}</p>}
+    <a class="read-link" href={experiencePath(entry)}>阅读全文 <span aria-hidden="true">→</span></a>
+  </div>
+</article>
+

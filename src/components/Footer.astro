@@ -1,0 +1,13 @@
+---
+import { SUBMISSION_EMAIL } from '../consts';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <p><strong>JNU CS BAOYAN</strong> · 江南大学计算机相关专业保研经验分享</p>
+    <p class="muted">经验来自个人分享，仅供参考；政策和流程请以官方通知为准。</p>
+    <p><a href={`mailto:${SUBMISSION_EMAIL}`}>{SUBMISSION_EMAIL}</a> · <a href={`${base}/about/`}>关于项目</a></p>
+  </div>
+</footer>
+

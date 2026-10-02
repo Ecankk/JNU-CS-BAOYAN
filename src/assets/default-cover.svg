@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">JNU CS BAOYAN</title>
+  <desc id="desc">江南大学计算机相关专业保研经验分享</desc>
+  <rect width="1200" height="675" fill="#f4eee6"/>
+  <circle cx="980" cy="120" r="210" fill="#e6c4ae" opacity=".75"/>
+  <circle cx="120" cy="610" r="250" fill="#d9dfcf" opacity=".8"/>
+  <path d="M0 475c170-95 285-90 430-6 152 88 275 98 417 2 124-84 236-84 353-23v227H0Z" fill="#d5a184" opacity=".35"/>
+  <text x="90" y="280" fill="#37322e" font-family="Georgia, serif" font-size="76" font-weight="700">JNU CS</text>
+  <text x="94" y="365" fill="#37322e" font-family="Arial, sans-serif" font-size="38" letter-spacing="8">BAOYAN</text>
+  <text x="96" y="425" fill="#6e6259" font-family="Arial, sans-serif" font-size="24">经验 · 资料 · 分享</text>
+</svg>
+

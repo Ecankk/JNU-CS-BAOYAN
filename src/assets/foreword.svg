@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 650" role="img" aria-labelledby="title desc">
+  <title id="title">最前面的话</title>
+  <desc id="desc">JNU CS BAOYAN 项目介绍</desc>
+  <rect width="1200" height="650" fill="#f4eee6"/>
+  <path d="M0 120c220 80 315-55 500 12s284 173 700 12v506H0Z" fill="#d9dfcf"/>
+  <path d="M0 360c170-100 320 38 506-20 162-51 324-18 694 94v216H0Z" fill="#d5a184" opacity=".58"/>
+  <circle cx="980" cy="160" r="70" fill="#f8f5ef" opacity=".8"/>
+  <text x="92" y="278" fill="#37322e" font-family="Georgia, serif" font-size="72" font-weight="700">JNU CS</text>
+  <text x="96" y="355" fill="#6e6259" font-family="Arial, sans-serif" font-size="30" letter-spacing="7">A NOTE BEFORE READING</text>
+</svg>
+
