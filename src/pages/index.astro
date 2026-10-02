@@ -1,6 +1,6 @@
 ---
 import { Image } from 'astro:assets';
-import { getCollection, getEntry } from 'astro:content';
+import { getCollection, getEntry, render } from 'astro:content';
 import ExperienceCard from '../components/ExperienceCard.astro';
 import SiteLayout from '../layouts/SiteLayout.astro';
 import { groupByYear, sortExperiences } from '../lib/experiences';
@@ -13,6 +13,7 @@ const pageSize = 6;
 const pageCount = Math.max(1, Math.ceil(sorted.length / pageSize));
 const years = [...groupByYear(experiences).keys()];
 const foreword = await getEntry('pages', 'foreword');
+const Foreword = foreword ? (await render(foreword)).Content : null;
 const forewordSummary = foreword?.data.description ?? '项目说明、经验来源与投稿方式。';
 ---
 <SiteLayout>
@@ -34,23 +35,26 @@ const forewordSummary = foreword?.data.description ?? '项目说明、经验来�
     </div>
   </section>
 
-  {foreword && (
+  {foreword && Foreword && (
     <section class="foreword" aria-labelledby="foreword-title">
       <div class="section-heading">
         <h2 id="foreword-title"><span class="heading-icon" aria-hidden="true">✦</span> 最前面的话</h2>
-        <a href={`${base}/about/`}>了解项目 →</a>
+        <a href={`${base}/about/`}>关于项目 →</a>
       </div>
-      <article class="foreword-card">
-        <a class="foreword-card-art" href={`${base}/about/`} aria-label="阅读最前面的话">
+      <details class="foreword-card">
+        <summary class="foreword-summary">
+          <span class="foreword-card-art" aria-hidden="true">
           <Image src={forewordArt} alt="项目介绍配图" width={1200} height={650} />
-        </a>
-        <div class="foreword-card-body">
-          <p class="eyebrow">PROJECT NOTE</p>
-          <h3>把经验留下，让准备少一点孤单。</h3>
-          <p>{forewordSummary}</p>
-          <a class="read-link" href={`${base}/about/`}>展开阅读 <span aria-hidden="true">→</span></a>
-        </div>
-      </article>
+          </span>
+          <span class="foreword-card-body">
+            <span class="eyebrow">PROJECT NOTE</span>
+            <span class="foreword-card-title">把经验留下，让准备少一点孤单。</span>
+            <span class="foreword-card-description">{forewordSummary}</span>
+            <span class="read-link">点击展开 <span aria-hidden="true">↓</span></span>
+          </span>
+        </summary>
+        <div class="prose foreword-expanded"><Foreword /></div>
+      </details>
     </section>
   )}
 
@@ -116,7 +120,6 @@ const forewordSummary = foreword?.data.description ?? '项目说明、经验来�
     }
   </script>
 
-  <!-- The home page keeps the three main destinations in the header and the foreword card. -->
   <section class="section-block" aria-labelledby="years-title">
     <div class="section-heading">
       <h2 id="years-title">按申请年份浏览</h2>
