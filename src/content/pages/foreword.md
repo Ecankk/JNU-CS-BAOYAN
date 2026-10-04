@@ -1,6 +1,7 @@
 ---
 title: "最前面的话"
 description: "JNU CS BAOYAN 项目的介绍与说明。"
+image: "./foreword-cover.jpg"
 ---
 
 # JNU-CS-BAOYAN
