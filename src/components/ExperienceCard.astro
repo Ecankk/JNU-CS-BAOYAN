@@ -2,13 +2,13 @@
 import { Image } from 'astro:assets';
 import type { ExperienceEntry } from '../lib/experiences';
 import { experiencePath } from '../lib/experiences';
-import defaultCover from '../assets/default-cover.svg';
+import { pooledCover } from '../lib/cover-pool';
 
 interface Props {
   entry: ExperienceEntry;
 }
 const { entry } = Astro.props;
-const cover = entry.data.cover ?? defaultCover;
+const cover = entry.data.cover ?? pooledCover(entry.id);
 const coverAlt = entry.data.coverAlt ?? `${entry.data.title}封面`;
 ---
 <article class="experience-card">

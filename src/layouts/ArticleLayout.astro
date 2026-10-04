@@ -5,14 +5,14 @@ import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
 import FormattedDate from '../components/FormattedDate.astro';
-import defaultCover from '../assets/default-cover.svg';
+import { pooledCover } from '../lib/cover-pool';
 
 interface Props {
   entry: ExperienceEntry;
 }
 const { entry } = Astro.props;
 const data = entry.data;
-const cover = data.cover ?? defaultCover;
+const cover = data.cover ?? pooledCover(entry.id);
 const coverAlt = data.coverAlt ?? `${data.title}封面`;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---

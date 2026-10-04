@@ -2,7 +2,7 @@
 title: "Eternity's Pre-Recommendation Experiences"
 author: "eternity"
 applicationYear: 2025
-cover: "./cover.svg"
+cover: "./cover.jpg"
 coverAlt: "Eternity 经验贴默认封面"
 draft: false
 ---
