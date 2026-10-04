@@ -15,6 +15,7 @@ const years = [...groupByYear(experiences).keys()];
 const foreword = await getEntry('pages', 'foreword');
 const Foreword = foreword ? (await render(foreword)).Content : null;
 const forewordSummary = foreword?.data.description ?? '项目说明、经验来源与投稿方式。';
+const forewordCover = foreword?.data.image ?? forewordArt;
 ---
 <SiteLayout>
   <section class="hero">
@@ -44,7 +45,7 @@ const forewordSummary = foreword?.data.description ?? '项目说明、经验来�
       <details class="foreword-card">
         <summary class="foreword-summary">
           <span class="foreword-card-art" aria-hidden="true">
-          <Image src={forewordArt} alt="项目介绍配图" width={1200} height={650} />
+          <Image src={forewordCover} alt="项目介绍配图" width={1200} height={650} />
           </span>
           <span class="foreword-card-body">
             <span class="eyebrow">PROJECT NOTE</span>

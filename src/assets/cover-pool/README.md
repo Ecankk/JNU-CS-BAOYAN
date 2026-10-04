@@ -16,3 +16,19 @@ coverAlt: "文章封面"
 ```
 
 没有指定封面时，网站继续使用统一默认封面。不要在文章中直接引用外部每日图片链接。
+
+## “最前面的话”封面
+
+如果要给首页顶部的“最前面的话”指定封面，把文件放在：
+
+```text
+src/content/pages/foreword-cover.jpg
+```
+
+然后在 `src/content/pages/foreword.md` 的 YAML 头中增加：
+
+```yaml
+image: "./foreword-cover.jpg"
+```
+
+没有指定时，首页继续使用项目插图作为默认图。
