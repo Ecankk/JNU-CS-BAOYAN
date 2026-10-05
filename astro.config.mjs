@@ -6,7 +6,8 @@ import { defineConfig } from 'astro/config';
 
 export default defineConfig({
   site: 'https://ecankk.github.io',
-  base: '/JNU-CS-BAOYAN',
+  // GitHub Pages needs the repository prefix; local dev should stay at `/`.
+  base: process.env.NODE_ENV === 'development' ? '/' : '/JNU-CS-BAOYAN',
   integrations: [mdx(), sitemap()],
 });
 
