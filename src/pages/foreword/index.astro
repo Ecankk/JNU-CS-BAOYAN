@@ -1,0 +1,26 @@
+---
+import { Image } from 'astro:assets';
+import { getEntry, render } from 'astro:content';
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import TableOfContents from '../../components/TableOfContents.astro';
+
+const entry = await getEntry('pages', 'foreword');
+if (!entry) throw new Error('Missing foreword page');
+const { Content, headings } = await render(entry);
+const cover = entry.data.image;
+---
+
+<SiteLayout title={entry.data.title} description={entry.data.description}>
+  <div class="article-layout-grid foreword-page">
+    <article class="article">
+      {cover && <Image class="article-cover" src={cover} alt="项目介绍封面" width={1200} height={675} />}
+      <header class="article-header">
+        <p class="eyebrow">PROJECT NOTE</p>
+        <h1>{entry.data.title}</h1>
+        {entry.data.description && <p class="article-summary">{entry.data.description}</p>}
+      </header>
+      <div class="prose"><Content /></div>
+    </article>
+    <TableOfContents headings={headings} />
+  </div>
+</SiteLayout>

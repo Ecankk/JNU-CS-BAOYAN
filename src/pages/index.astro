@@ -1,6 +1,6 @@
 ---
 import { Image } from 'astro:assets';
-import { getCollection, getEntry, render } from 'astro:content';
+import { getCollection, getEntry } from 'astro:content';
 import ExperienceCard from '../components/ExperienceCard.astro';
 import SiteLayout from '../layouts/SiteLayout.astro';
 import { groupByYear, sortExperiences } from '../lib/experiences';
@@ -13,7 +13,6 @@ const pageSize = 6;
 const pageCount = Math.max(1, Math.ceil(sorted.length / pageSize));
 const years = [...groupByYear(experiences).keys()];
 const foreword = await getEntry('pages', 'foreword');
-const Foreword = foreword ? (await render(foreword)).Content : null;
 const forewordSummary = foreword?.data.description ?? '项目说明、经验来源与投稿方式。';
 const forewordCover = foreword?.data.image ?? forewordArt;
 ---
@@ -21,7 +20,7 @@ const forewordCover = foreword?.data.image ?? forewordArt;
   <section class="hero">
     <div class="hero-copy">
       <p class="eyebrow">JNU · CS · BAOYAN</p>
-      <h1>把经验留下，<br />让准备少一点孤单。</h1>
+      <h1>愿你的准备，<br />都有回响</h1>
       <p class="hero-lead">
         JNU CS BAOYAN 收集江南大学计算机相关专业的保研经验、准备资料和流程记录，
         按申请年份整理，方便后来者从真实经历中找到自己的参考。
@@ -36,26 +35,25 @@ const forewordCover = foreword?.data.image ?? forewordArt;
     </div>
   </section>
 
-  {foreword && Foreword && (
+  {foreword && (
     <section class="foreword" aria-labelledby="foreword-title">
       <div class="section-heading">
         <h2 id="foreword-title"><span class="heading-icon" aria-hidden="true">✦</span> 最前面的话</h2>
-        <a href={`${base}/about/`}>关于项目 →</a>
+        <a href={`${base}/foreword/`}>阅读全文 →</a>
       </div>
-      <details class="foreword-card">
-        <summary class="foreword-summary">
+      <a class="foreword-card" href={`${base}/foreword/`}>
+        <span class="foreword-summary">
           <span class="foreword-card-art" aria-hidden="true">
           <Image src={forewordCover} alt="项目介绍配图" width={1200} height={650} />
           </span>
           <span class="foreword-card-body">
             <span class="eyebrow">PROJECT NOTE</span>
-            <span class="foreword-card-title">把经验留下，让准备少一点孤单。</span>
+            <span class="foreword-card-title">愿你的准备，都有回响</span>
             <span class="foreword-card-description">{forewordSummary}</span>
-            <span class="read-link">点击展开 <span aria-hidden="true">↓</span></span>
+            <span class="read-link">进入文章 <span aria-hidden="true">→</span></span>
           </span>
-        </summary>
-        <div class="prose foreword-expanded"><Foreword /></div>
-      </details>
+        </span>
+      </a>
     </section>
   )}
 
