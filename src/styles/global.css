@@ -10,6 +10,10 @@
   --sage: #d9dfcf;
   --shadow: 0 18px 45px rgba(93, 67, 49, 0.09);
   --radius: 18px;
+  /* 正文排版：可直接调整这些变量。 */
+  --prose-width: 900px;
+  --prose-font-size: 1.08rem;
+  --prose-line-height: 1.9;
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
     "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
   color: var(--text);
@@ -99,6 +103,7 @@ nav { display: flex; align-items: center; gap: .25rem; flex-wrap: wrap; }
   margin-bottom: 4.5rem;
 }
 .hero-copy { max-width: 700px; }
+.hero-title { white-space: nowrap; font-size: clamp(2.6rem, 4vw, 3.6rem); }
 .eyebrow {
   margin: 0 0 .6rem;
   color: var(--accent-deep);
@@ -252,21 +257,29 @@ h3 { margin: 0; font-size: 1.22rem; }
 .resource-card h3 { margin-bottom: .45rem; }
 .resource-card p { margin: 0; color: var(--muted); font-size: .95rem; }
 .back-link { display: inline-block; margin-bottom: 1.5rem; font-weight: 700; text-decoration: none; }
-.article-layout-grid { display: grid; grid-template-columns: minmax(0, 900px) minmax(190px, 240px); gap: clamp(2rem, 5vw, 4.5rem); align-items: start; }
+.article-layout-grid { display: grid; grid-template-columns: minmax(190px, 240px) minmax(0, var(--prose-width)); gap: clamp(2rem, 5vw, 4.5rem); align-items: start; }
 .article { min-width: 0; }
 .article-cover { display: block; width: 100%; max-height: 480px; object-fit: cover; border-radius: 22px; box-shadow: var(--shadow); }
 .article-header { padding: 2.3rem 0 1.5rem; border-bottom: 1px solid var(--border); }
 .article-header h1 { max-width: 850px; margin-bottom: .9rem; font-size: clamp(2rem, 5vw, 4rem); }
 .article-summary { color: var(--muted); font-size: 1.12rem; }
 .article-meta { display: flex; flex-wrap: wrap; gap: .7rem 1.25rem; color: var(--muted); font-size: .9rem; }
-.article .prose { padding: 2.4rem 0; max-width: 900px; font-size: 1.08rem; line-height: 1.9; }
-.article-toc { position: sticky; top: 108px; max-height: calc(100vh - 140px); overflow: auto; padding: 1rem 0 1rem 1.2rem; border-left: 1px solid var(--border); }
+.article .prose { padding: 2.4rem 0; max-width: var(--prose-width); font-size: var(--prose-font-size); line-height: var(--prose-line-height); }
+.article-toc { position: sticky; top: 108px; max-height: calc(100vh - 140px); overflow: auto; padding: 1rem 1.2rem 1rem 0; border-right: 1px solid var(--border); }
 .article-toc-title { margin: 0 0 .7rem; color: var(--text); font-weight: 800; }
 .article-toc ul { display: grid; gap: .3rem; margin: 0; padding: 0; list-style: none; }
 .article-toc a { color: var(--muted); font-size: .9rem; line-height: 1.45; text-decoration: none; }
 .article-toc a:hover { color: var(--accent-deep); }
-.article-toc .toc-subitem { padding-left: .8rem; }
+.article-toc .toc-section.is-active > .toc-level-2 { color: var(--accent-deep); font-weight: 800; }
+.article-toc .toc-children { display: none; margin-top: .3rem; padding-left: .8rem; }
+.article-toc .toc-section.is-active .toc-children { display: grid; }
 .article-end-nav { display: flex; justify-content: space-between; gap: 1rem; max-width: 1180px; margin: 0 auto; padding-top: 1.5rem; border-top: 1px solid var(--border); }
+.prose { font-family: var(--body-font, inherit); }
+.prose h1 { margin-top: 0; font-size: clamp(2rem, 4vw, 3.2rem); }
+.prose h2 { font-size: 1.65rem; }
+.prose h3 { font-size: 1.25rem; }
+.prose h4 { font-size: 1.08rem; }
+.prose img { display: block; width: min(100%, 900px); height: auto; margin: 1.5rem auto; object-fit: contain; }
 .site-footer { border-top: 1px solid var(--border); background: #efe7de; }
 .footer-inner { width: min(1180px, calc(100% - 2.5rem)); margin: 0 auto; padding: 2.5rem 0; color: var(--muted); font-size: .9rem; }
 .footer-inner p { margin: .2rem 0; }
@@ -280,8 +293,9 @@ h3 { margin: 0; font-size: 1.22rem; }
   .hero { grid-template-columns: 1fr; gap: 2rem; }
   .hero-art { max-width: 680px; }
   .experience-grid, .resource-grid, .link-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .hero-title { white-space: normal; }
   .article-layout-grid { grid-template-columns: 1fr; }
-  .article-toc { position: static; max-height: none; padding: 1rem 0; border-top: 1px solid var(--border); border-left: 0; }
+  .article-toc { position: static; max-height: none; padding: 1rem 0; border-top: 1px solid var(--border); border-right: 0; }
 }
 @media (max-width: 650px) {
   body { font-size: 16px; }

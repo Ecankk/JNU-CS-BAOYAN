@@ -10,20 +10,52 @@ interface Props {
 }
 
 const { headings = [] } = Astro.props;
-const visibleHeadings = headings.filter((heading) => heading.depth >= 2 && heading.depth <= 3);
+const sections: Array<{ heading: Heading; children: Heading[] }> = [];
+for (const heading of headings) {
+  if (heading.depth === 2) sections.push({ heading, children: [] });
+  else if (heading.depth === 3 && sections.length) sections.at(-1)?.children.push(heading);
+}
 ---
 
-{visibleHeadings.length > 0 && (
-  <aside class="article-toc" aria-label="文章目录">
+{sections.length > 0 && (
+  <aside class="article-toc" aria-label="文章目录" data-toc>
     <p class="article-toc-title">目录</p>
     <nav>
       <ul>
-        {visibleHeadings.map((heading) => (
-          <li class:list={{ 'toc-subitem': heading.depth === 3 }}>
-            <a href={`#${heading.slug}`}>{heading.text}</a>
+        {sections.map(({ heading, children }) => (
+          <li class="toc-section" data-toc-section data-toc-slug={heading.slug}>
+            <a class="toc-level-2" href={`#${heading.slug}`}>{heading.text}</a>
+            {children.length > 0 && (
+              <ul class="toc-children">
+                {children.map((child) => (
+                  <li><a href={`#${child.slug}`}>{child.text}</a></li>
+                ))}
+              </ul>
+            )}
           </li>
         ))}
       </ul>
     </nav>
   </aside>
 )}
+
+<script>
+  const toc = document.querySelector<HTMLElement>('[data-toc]');
+  if (toc) {
+    const sections = Array.from(toc.querySelectorAll<HTMLElement>('[data-toc-section]'));
+    const activate = (slug: string) => {
+      sections.forEach((section) => section.classList.toggle('is-active', section.dataset.tocSlug === slug));
+    };
+    const targets = sections
+      .map((section) => document.getElementById(section.dataset.tocSlug ?? ''))
+      .filter((heading): heading is HTMLElement => Boolean(heading));
+    if (targets.length) {
+      const observer = new IntersectionObserver((entries) => {
+        const visible = entries.filter((entry) => entry.isIntersecting).sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+        if (visible[0]?.target.id) activate(visible[0].target.id);
+      }, { rootMargin: '-12% 0px -72% 0px', threshold: 0 });
+      targets.forEach((heading) => observer.observe(heading));
+    }
+    sections.forEach((section) => section.querySelector('a')?.addEventListener('click', () => activate(section.dataset.tocSlug ?? '')));
+  }
+</script>
