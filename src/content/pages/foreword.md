@@ -1,6 +1,6 @@
 ---
 title: "最前面的话"
-description: "JNU CS BAOYAN 项目的介绍与说明。"
+description: "JNU CS BAOYAN"
 image: "./foreword-cover.jpg"
 ---
 
@@ -9,7 +9,7 @@ image: "./foreword-cover.jpg"
 欢迎体验 **江南大学计算机相关专业保研经验分享项目**！本项目旨在收集和整理保研经验贴，为有志于升学的学弟学妹提供参考，帮助大家更好地准备夏令营和预推免。\
 目前该项目已构建在线网站：[江南大学 CS 保研经验仓库](https://jnu-baoyan.github.io/cs/)！
 
-如果觉得本项目有帮助，请 :star: 支持一下。
+如果觉得本项目有帮助，请star支持一下。
 
 🆕[保研服务](#-服务)：新增了保研服务模块，可视自身需要进行咨询和联系。
 
