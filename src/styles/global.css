@@ -307,6 +307,8 @@ h3 { margin: 0; font-size: 1.1rem; }
 .article-summary { color: var(--muted); font-size: 1.12rem; }
 .article-meta { display: flex; flex-wrap: wrap; gap: .7rem 1.25rem; color: var(--muted); font-size: .9rem; }
 .article .prose { padding: 2.4rem 0; max-width: none; font-size: var(--prose-font-size); line-height: var(--prose-line-height); }
+/* 文章标题已由 ArticleLayout 统一渲染；保留原 Markdown，只避免页面重复显示首个 # 标题。 */
+.article-shell .article .prose > h1:first-child { display: none; }
 .article-toc { position: sticky; top: 108px; max-height: calc(100vh - 140px); overflow: auto; padding: 1rem 1.2rem 1rem 0; border-right: 1px solid var(--border); }
 .article-toc-title { margin: 0 0 .7rem; color: var(--text); font-weight: 800; }
 .article-toc ul { display: grid; gap: .3rem; margin: 0; padding: 0; list-style: none; }

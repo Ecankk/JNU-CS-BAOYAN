@@ -38,7 +38,7 @@ draft: false
 
 正文不要求投稿者填写 YAML；维护者在发布前补充元数据。文章不会按学校、夏令营或预推免拆分栏目，这些信息保留在正文中。
 
-首页说明、流程、资料和关于页面位于 `src/content/pages/`。首页“最前面的话”以横向折叠卡片展示，完整内容在关于页查看；经验列表和年份列表均提供页码导航。投稿模板位于：
+首页说明、流程、资料和关于页面位于 `src/content/pages/`。“最前面的话”以首页横向卡片展示，点击后进入独立文章页；经验列表和年份列表均提供页码导航。投稿模板位于：
 
 - `public/templates/submission-template.md`
 - `public/templates/submission-template.docx`
@@ -51,13 +51,14 @@ draft: false
 https://ecankk.github.io/JNU-CS-BAOYAN/
 ```
 
-站点地址和仓库子路径集中在 `astro.config.mjs`。GitHub Actions 工作流会在后续配置中执行检查、构建和部署；生产分支的实际发布权限需要在 GitHub 仓库中确认。
+站点地址和仓库子路径集中在 `astro.config.mjs`。GitHub Actions 工作流会在 `main` 推送后执行检查、构建和部署。
 
 ## 维护文档
 
 - [架构说明](docs/ARCHITECTURE.md)
 - [已确认决策](docs/DECISIONS.md)
 - [迁移记录](docs/MIGRATION.md)
+- [发布前审查](docs/REVIEW.md)
 - [投稿与维护模板](public/templates/submission-template.md)
 
 `references/` 位于项目目录外，仅用于前期盘点和迁移核对，不会提交到这个 GitHub 仓库。

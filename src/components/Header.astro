@@ -26,15 +26,15 @@ const hrefFor = (path: string) => `${base}${path}`;
       <span>{SITE_TITLE}</span>
     </a>
     <nav aria-label="主导航">
-      <a class:list={{ active: currentPath === '/' }} href={hrefFor('/')}>首页</a>
-      {links.map(([label, path]) => (
-        <a class:list={{ active: currentPath.startsWith(path) }} href={hrefFor(path)}>{label}</a>
-      ))}
       <form class="header-search" action={hrefFor('/search/')} method="get" role="search">
         <label class="sr-only" for="header-search-input">搜索经验贴</label>
         <input id="header-search-input" type="search" name="q" placeholder="搜索" aria-label="搜索经验贴" />
         <button type="submit" aria-label="提交搜索">⌕</button>
       </form>
+      <a class:list={{ active: currentPath === '/' }} href={hrefFor('/')}>首页</a>
+      {links.map(([label, path]) => (
+        <a class:list={{ active: currentPath.startsWith(path) }} href={hrefFor(path)}>{label}</a>
+      ))}
       <button class="theme-toggle" type="button" data-theme-toggle aria-label="切换日夜主题" title="切换日夜主题"><span aria-hidden="true">☾</span></button>
     </nav>
   </div>
