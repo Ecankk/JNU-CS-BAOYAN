@@ -4,6 +4,7 @@ import { SITE_TITLE } from '../consts';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const links = [
   ['经验贴', '/experiences/'],
+  ['搜索', '/search/'],
   ['保研流程', '/guide/'],
   ['资料与工具', '/resources/'],
   ['投稿', '/submit/'],
@@ -30,7 +31,29 @@ const hrefFor = (path: string) => `${base}${path}`;
       {links.map(([label, path]) => (
         <a class:list={{ active: currentPath.startsWith(path) }} href={hrefFor(path)}>{label}</a>
       ))}
+      <button class="theme-toggle" type="button" data-theme-toggle aria-label="切换日夜主题" title="切换日夜主题"><span aria-hidden="true">☾</span></button>
     </nav>
   </div>
 </header>
+
+<script>
+  const root = document.documentElement;
+  const toggle = document.querySelector<HTMLButtonElement>('[data-theme-toggle]');
+  const storedTheme = localStorage.getItem('jnu-cs-baoyan-theme');
+  if (storedTheme === 'dark' || storedTheme === 'light') root.dataset.theme = storedTheme;
+  const updateThemeButton = () => {
+    const dark = root.dataset.theme === 'dark';
+    if (toggle) {
+      toggle.querySelector('span')!.textContent = dark ? '☀' : '☾';
+      toggle.setAttribute('aria-label', dark ? '切换日间主题' : '切换夜间主题');
+    }
+  };
+  updateThemeButton();
+  toggle?.addEventListener('click', () => {
+    const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+    root.dataset.theme = next;
+    localStorage.setItem('jnu-cs-baoyan-theme', next);
+    updateThemeButton();
+  });
+</script>
 

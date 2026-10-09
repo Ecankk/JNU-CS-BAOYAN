@@ -25,6 +25,18 @@
   font-synthesis: none;
   font-variant-emoji: emoji;
 }
+:root[data-theme="dark"] {
+  --bg: #141414;
+  --surface: #202020;
+  --surface-soft: #2b2b2b;
+  --text: #f1f1f1;
+  --muted: #b7b7b7;
+  --border: #3c3c3c;
+  --accent: #d8d8d8;
+  --accent-deep: #ffffff;
+  --sage: #737373;
+  --shadow: 0 18px 45px rgba(0, 0, 0, .28);
+}
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 body {
@@ -94,6 +106,8 @@ nav { display: flex; align-items: center; gap: .25rem; flex-wrap: wrap; }
   color: var(--accent-deep);
   background: #efe3d8;
 }
+.theme-toggle { display: inline-grid; place-items: center; width: 2.25rem; height: 2.25rem; margin-left: .35rem; padding: 0; border: 1px solid var(--border); border-radius: 50%; background: var(--surface); color: var(--text); font: inherit; cursor: pointer; }
+.theme-toggle:hover { border-color: var(--accent); color: var(--accent-deep); }
 .page-shell {
   width: min(1180px, calc(100% - 2.5rem));
   margin: 0 auto;
@@ -285,6 +299,19 @@ h3 { margin: 0; font-size: 1.1rem; }
 .article-end-nav { display: flex; justify-content: space-between; gap: 1rem; max-width: var(--prose-width); margin: 0 auto; padding-top: 1.5rem; border-top: 1px solid var(--border); }
 .prose h1 { margin-top: 0; font-size: clamp(1.8rem, 3.5vw, 2.8rem); }
 .prose img { display: block; width: min(100%, var(--prose-width)); height: auto; margin: 1.5rem auto; object-fit: contain; }
+.prose .contributors { display: flex; flex-wrap: wrap; gap: .75rem; align-items: center; }
+.prose .contributors a { display: inline-flex; width: 48px; height: 48px; margin: 0; border-radius: 50%; overflow: hidden; background: var(--surface-soft); }
+.prose .contributors img { display: block; width: 48px; height: 48px; margin: 0; border-radius: 50%; object-fit: cover; }
+.search-panel { max-width: 900px; }
+.search-form { display: flex; gap: .7rem; align-items: center; }
+.search-form input { flex: 1; min-width: 0; min-height: 2.8rem; padding: .55rem .9rem; border: 1px solid var(--border); border-radius: 999px; background: var(--surface); color: var(--text); font: inherit; }
+.search-form input:focus { outline: 2px solid color-mix(in srgb, var(--accent) 45%, transparent); outline-offset: 2px; }
+.search-hint { margin: .9rem 0 1rem; color: var(--muted); font-size: .92rem; }
+.search-results { display: grid; gap: .8rem; }
+.search-result { padding: 1rem 1.1rem; border: 1px solid var(--border); border-radius: 14px; background: var(--surface); }
+.search-result-title { color: var(--text); font-weight: 800; text-decoration: none; }
+.search-result-title:hover { color: var(--accent-deep); }
+.search-result-meta, .search-result-snippet { margin: .35rem 0 0; color: var(--muted); font-size: .92rem; }
 .site-footer { border-top: 1px solid var(--border); background: #efe7de; }
 .footer-inner { width: min(1180px, calc(100% - 2.5rem)); margin: 0 auto; padding: 2.5rem 0; color: var(--muted); font-size: .9rem; }
 .footer-inner p { margin: .2rem 0; }
@@ -294,6 +321,19 @@ h3 { margin: 0; font-size: 1.1rem; }
   position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px;
   overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
 }
+[data-theme="dark"] body { background: #141414; }
+[data-theme="dark"] .site-header { background: rgba(20, 20, 20, .92); border-bottom-color: var(--border); }
+[data-theme="dark"] .site-header nav a:hover,
+[data-theme="dark"] .site-header nav a.active,
+[data-theme="dark"] .pagination-links a:hover,
+[data-theme="dark"] .pagination-links button:hover,
+[data-theme="dark"] .pagination-links a.active,
+[data-theme="dark"] .pagination-links button.active { background: #333; }
+[data-theme="dark"] .brand-mark,
+[data-theme="dark"] .heading-icon { background: #333; }
+[data-theme="dark"] .button { background: #f1f1f1; color: #151515; }
+[data-theme="dark"] .button:hover { background: #ffffff; color: #000000; }
+[data-theme="dark"] .site-footer { background: #1b1b1b; }
 @media (max-width: 1300px) {
   .article-layout-grid { grid-template-columns: minmax(180px, 220px) minmax(0, 1fr); }
   .article-layout-grid > .article-toc { grid-column: 1; }

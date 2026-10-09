@@ -1,0 +1,96 @@
+---
+import type { ExperienceEntry } from '../lib/experiences';
+import { experiencePath } from '../lib/experiences';
+
+interface Props {
+  entries: ExperienceEntry[];
+}
+
+const { entries } = Astro.props;
+const records = entries.map((entry) => ({
+  title: entry.data.title,
+  author: entry.data.author,
+  year: entry.data.applicationYear,
+  summary: entry.data.summary ?? '',
+  text: entry.body ?? '',
+  path: experiencePath(entry),
+}));
+const serialized = JSON.stringify(records).replace(/</g, '\\u003c');
+---
+
+<section class="search-panel" data-search-panel>
+  <form class="search-form" data-search-form role="search">
+    <label class="sr-only" for="experience-search">搜索经验贴</label>
+    <input id="experience-search" type="search" name="q" placeholder="搜索标题、作者或正文内容" autocomplete="off" data-search-input />
+    <button class="button" type="submit">搜索</button>
+  </form>
+  <p class="search-hint" data-search-hint>支持搜索文章标题、作者、申请年份和正文内容。</p>
+  <div class="search-results" data-search-results aria-live="polite"></div>
+</section>
+
+<script type="application/json" data-search-index set:html={serialized}></script>
+<script>
+  interface SearchRecord {
+    title: string;
+    author: string;
+    year: number;
+    summary: string;
+    text: string;
+    path: string;
+  }
+
+  const panel = document.querySelector<HTMLElement>('[data-search-panel]');
+  const form = panel?.querySelector<HTMLFormElement>('[data-search-form]');
+  const input = panel?.querySelector<HTMLInputElement>('[data-search-input]');
+  const results = panel?.querySelector<HTMLElement>('[data-search-results]');
+  const hint = panel?.querySelector<HTMLElement>('[data-search-hint]');
+  const data = JSON.parse(document.querySelector<HTMLScriptElement>('[data-search-index]')?.textContent ?? '[]') as SearchRecord[];
+
+  const normalize = (value: string) => value.toLocaleLowerCase().replace(/[\s\p{P}\p{S}]+/gu, ' ').trim();
+  const render = (query: string) => {
+    if (!results || !hint) return;
+    const normalizedQuery = normalize(query);
+    if (!normalizedQuery) {
+      results.replaceChildren();
+      hint.textContent = '支持搜索文章标题、作者、申请年份和正文内容。';
+      return;
+    }
+    const matches = data.filter((item) => normalize(`${item.title} ${item.author} ${item.year} ${item.summary} ${item.text}`).includes(normalizedQuery));
+    results.replaceChildren();
+    hint.textContent = `找到 ${matches.length} 篇相关经验贴`;
+    for (const item of matches) {
+      const card = document.createElement('article');
+      card.className = 'search-result';
+      const link = document.createElement('a');
+      link.href = item.path;
+      link.className = 'search-result-title';
+      link.textContent = item.title;
+      const meta = document.createElement('p');
+      meta.className = 'search-result-meta';
+      meta.textContent = `${item.year} · ${item.author}`;
+      const source = `${item.summary} ${item.text}`.replace(/[#*_`>\[\]()]/g, ' ').replace(/\s+/g, ' ').trim();
+      const position = normalize(source).indexOf(normalizedQuery);
+      const start = Math.max(0, position - 55);
+      const snippet = document.createElement('p');
+      snippet.className = 'search-result-snippet';
+      snippet.textContent = `${start > 0 ? '…' : ''}${source.slice(start, start + 180)}${start + 180 < source.length ? '…' : ''}`;
+      card.append(link, meta, snippet);
+      results.append(card);
+    }
+  };
+
+  form?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const query = input?.value ?? '';
+    const url = new URL(window.location.href);
+    query ? url.searchParams.set('q', query) : url.searchParams.delete('q');
+    window.history.replaceState({}, '', url);
+    render(query);
+  });
+  input?.addEventListener('input', () => render(input.value));
+  if (input) {
+    const query = new URLSearchParams(window.location.search).get('q') ?? '';
+    input.value = query;
+    render(query);
+  }
+</script>
