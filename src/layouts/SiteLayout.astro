@@ -7,8 +7,9 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 interface Props {
   title?: string;
   description?: string;
+  wide?: boolean;
 }
-const { title = SITE_TITLE, description = SITE_DESCRIPTION } = Astro.props;
+const { title = SITE_TITLE, description = SITE_DESCRIPTION, wide = false } = Astro.props;
 ---
 <!doctype html>
 <html lang="zh-CN">
@@ -17,7 +18,7 @@ const { title = SITE_TITLE, description = SITE_DESCRIPTION } = Astro.props;
   </head>
   <body>
     <Header />
-    <main class="page-shell"><slot /></main>
+    <main class:list={{ 'page-shell': true, 'page-shell-wide': wide }}><slot /></main>
     <Footer />
   </body>
 </html>
