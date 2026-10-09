@@ -53,13 +53,12 @@ https://ecankk.github.io/JNU-CS-BAOYAN/
 
 站点地址和仓库子路径集中在 `astro.config.mjs`。GitHub Actions 工作流会在 `main` 推送后执行检查、构建和部署。
 
-## 维护文档
+## 维护
 
-- [架构说明](docs/ARCHITECTURE.md)
-- [已确认决策](docs/DECISIONS.md)
-- [迁移记录](docs/MIGRATION.md)
-- [发布前审查](docs/REVIEW.md)
-- [投稿与维护模板](public/templates/submission-template.md)
+项目内部的迁移记录、审查结果和待办清单保存在本地 `docs/` 目录，不随 GitHub 仓库发布。投稿模板仍公开在：
+
+- `public/templates/submission-template.md`
+- `public/templates/submission-template.docx`
 
 `references/` 位于项目目录外，仅用于前期盘点和迁移核对，不会提交到这个 GitHub 仓库。
 

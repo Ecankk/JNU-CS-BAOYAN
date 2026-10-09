@@ -25,3 +25,6 @@ start-preview.sh
 
 # jetbrains setting folder
 .idea/
+
+# local maintenance notes (not published with the project)
+/docs/
