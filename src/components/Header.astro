@@ -4,7 +4,6 @@ import { SITE_TITLE } from '../consts';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const links = [
   ['经验贴', '/experiences/'],
-  ['搜索', '/search/'],
   ['保研流程', '/guide/'],
   ['资料与工具', '/resources/'],
   ['投稿', '/submit/'],
@@ -31,6 +30,11 @@ const hrefFor = (path: string) => `${base}${path}`;
       {links.map(([label, path]) => (
         <a class:list={{ active: currentPath.startsWith(path) }} href={hrefFor(path)}>{label}</a>
       ))}
+      <form class="header-search" action={hrefFor('/search/')} method="get" role="search">
+        <label class="sr-only" for="header-search-input">搜索经验贴</label>
+        <input id="header-search-input" type="search" name="q" placeholder="搜索" aria-label="搜索经验贴" />
+        <button type="submit" aria-label="提交搜索">⌕</button>
+      </form>
       <button class="theme-toggle" type="button" data-theme-toggle aria-label="切换日夜主题" title="切换日夜主题"><span aria-hidden="true">☾</span></button>
     </nav>
   </div>
