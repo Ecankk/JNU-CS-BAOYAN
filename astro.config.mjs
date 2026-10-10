@@ -5,9 +5,9 @@ import sitemap from '@astrojs/sitemap';
 import { defineConfig } from 'astro/config';
 
 export default defineConfig({
-  site: 'https://ecankk.github.io',
+  site: 'https://jnu-cs-baoyan.github.io',
   // GitHub Pages needs the repository prefix; local dev should stay at `/`.
-  base: process.env.NODE_ENV === 'development' ? '/' : '/JNU-CS-BAOYAN',
+  base: process.env.NODE_ENV === 'development' ? '/' : '/CS2026',
   integrations: [mdx(), sitemap()],
 });
 

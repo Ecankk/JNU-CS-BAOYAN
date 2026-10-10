@@ -48,7 +48,7 @@ draft: false
 当前项目按 GitHub Pages 项目站点配置：
 
 ```text
-https://ecankk.github.io/JNU-CS-BAOYAN/
+https://jnu-cs-baoyan.github.io/CS2026/
 ```
 
 站点地址和仓库子路径集中在 `astro.config.mjs`。GitHub Actions 工作流会在 `main` 推送后执行检查、构建和部署。
