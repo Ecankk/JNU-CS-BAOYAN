@@ -25,7 +25,7 @@ npm run preview
 
 ## 内容结构
 
-经验文章放在 `src/content/experiences/<stable-id>/index.md`，同一目录可放封面、正文图片和经过审核的附件。新文章至少需要：
+经验文章放在 `src/content/experiences/<申请年份>/<stable-id>/index.md`，同一目录可放封面、正文图片和经过审核的附件。新文章至少需要：
 
 ```yaml
 ---
@@ -42,6 +42,15 @@ draft: false
 
 - `public/templates/submission-template.md`
 - `public/templates/submission-template.docx`
+
+资料与工具统一维护在 `src/content/pages/resources.md`，不按年份拆分；有时效性的资料在条目中注明适用年份。独立资料文件可放在 `public/resources/`，文章附件仍与文章放在同一目录。旧 `/resources/2025/` 地址跳转到统一资料页。
+
+## 投稿
+
+- 邮箱：将 Markdown 或 Word 正文、封面及可公开附件发送至 `eeecank@163.com`，注明申请年份和署名；YAML 可由维护者补充。
+- PR：Fork 本仓库，在对应年份目录中添加文章及图片，补充上述 YAML，然后向 `main` 提交 PR。完整指南见 [投稿页面](https://jnu-cs-baoyan.github.io/CS2026/submit/)。
+
+新投稿默认一人一篇完整经验，夏令营与预推免经历放在同一篇文章内。投稿由维护者审核，PR 合并后自动构建部署；提交 PR 和 Approve 本身不会发布网站。
 
 ## 部署
 
